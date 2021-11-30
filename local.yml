@@ -1,0 +1,42 @@
+---
+- hosts: localhost
+  gather_facts: true
+  connection: local
+  become: yes
+  collections:
+    - lvrfrc87.git_acp
+
+
+# Declare variables
+  vars_prompt:
+
+#    - name: mode
+#      prompt: Choose push method 'ssh' / 'https' / 'local'
+#      private: no
+    
+    - name : comment
+      prompt: Commit comment
+      private: no
+
+    - name : branch
+      prompt : Enter branch
+      private: no
+
+    - name : path
+      prompt: Enter working directory
+      private: no
+
+    - name : url
+      prompt: Specify Git url
+      private: no
+
+  tasks:
+  
+  - name: LOCAL
+    git_acp:
+      path: "{{ path }}"
+      branch: "{{ branch }}"
+      comment: " {{ comment }}"
+      add: ["."]
+      mode: local
+      url: "{{ url }}"
